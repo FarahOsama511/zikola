@@ -1,17 +1,17 @@
 class LoginModel {
-  final String userName;
+  final String username;
   final String? token;
   final String? email;
   final String password;
   LoginModel({
-    required this.userName,
+    required this.username,
      this.token,
      this.email,
     required this.password,
   });
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     return LoginModel(
-      userName: json['userName'],
+      username: json['username'],
       token: json['token'],
       email: json['email'],
       password: json['password'],
@@ -19,7 +19,7 @@ class LoginModel {
   }
   Map<String, dynamic> toJson() {
     return {
-      'userName': userName,
+      'username': username,
       'token': token,
       'email': email,
       'password': password,

@@ -1,17 +1,22 @@
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:dartz/dartz.dart';
+import 'package:zikola/core/networking/api_error_handler.dart';
+import 'package:zikola/core/networking/api_result.dart';
 import 'package:zikola/features/login/data/webservices/login_webservice.dart';
+import '../../../../core/helpers/sharedpref_helper.dart';
+import '../../../../main.dart';
 
 class LoginRepo {
   final LoginWebservice loginWebservice;
   LoginRepo(this.loginWebservice);
-  Future<String>login(String userName,String password)async{
+  Future<RepoResult<String>>login(String username,String password)async{
     try{
-      final response=await loginWebservice.login(userName, password);
-      final SharedPreferences prefs=await SharedPreferences.getInstance();
-      final token=prefs.setString('token', response['token']);
-      return response['token'];
+      final response=await loginWebservice.login(username, password);
+      SharedprefHelper.setSecurityString("token", response['token']);
+      logger.d("=======${response['token']}");
+      return Right(response['token']); 
     }catch(e){
-      return Future.error(e);
+      return Left(ApiErrorHandler.handle(e));
     }
   }
 }

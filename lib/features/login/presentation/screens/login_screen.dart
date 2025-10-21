@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../main.dart';
 import '../../bussines logic/login_cubit.dart';
 import '../../bussines logic/login_state.dart';
 
@@ -50,8 +51,8 @@ class _SimpleLoginTestState extends State<SimpleLoginTest> {
                   return Text("Success: ");
                 } else if (state is ErrorLoginState) {
                   
-                  print(  state.error);
-                                    return Text("Error: ${state.error}");
+                logger.d("Login error: ${state.error.message}");
+              
                 }
                 return Text("Enter credentials to login");
               },

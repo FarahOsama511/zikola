@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'core/routing/route.dart';
 
-
+  var logger = Logger();
 void main() {
   runApp(const MyApp());
 }

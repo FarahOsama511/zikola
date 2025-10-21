@@ -5,13 +5,15 @@ import 'package:zikola/features/login/data/repositries/login_repo.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginRepo) : super(LoginInitial());
   final LoginRepo loginRepo;
+
   Future<void> login(String userName, String password) async {
     emit(LoadingLoginState());
-    try {
-      await loginRepo.login(userName, password);
-      emit(SuccessLoginState());
-    } catch (e) {
-      emit(ErrorLoginState(e.toString()));
-    }
+    final result = await loginRepo.login(userName, password);
+    
+    result.fold(
+      (error) => emit(ErrorLoginState(error)),
+      (token) => emit(SuccessLoginState()),
+    );
   }
 }
+
