@@ -1,67 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../main.dart';
-import '../../bussines logic/login_cubit.dart';
-import '../../bussines logic/login_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zikola/core/theming/text_style_manager.dart';
+import 'package:zikola/features/login/presentation/widgets/login_box.dart';
 
-class SimpleLoginTest extends StatefulWidget {
+import '../widgets/build_bloc_widget.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _SimpleLoginTestState createState() => _SimpleLoginTestState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SimpleLoginTestState extends State<SimpleLoginTest> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  void testLogin() async {
-    await context.read<LoginCubit>().login(
-          usernameController.text,
-          passwordController.text,
-        );
-  }
-
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Test Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: "Username"),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(14.r, 80.r, 14.r, 14.r),
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                    height: 90.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 9,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Image.asset(
+                        "assets/images/logo.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  "Office Coffee",
+                  style: TextStyleManager.font20RegularBlack,
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  "Order your favorite drinks",
+                  style: TextStyleManager.font20RegularGrey,
+                ),
+                SizedBox(height: 20.h),
+                SizedBox(
+                  height: 130.h,
+                  width: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Image.asset(
+                      "assets/images/drinks.jpg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                buildBlocWidget(),
+              ],
             ),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: testLogin,
-              child: Text("Login"),
-            ),
-            const SizedBox(height: 20),
-            BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) {
-                if (state is LoadingLoginState) {
-                  return Text("Loading...");
-                } else if (state is SuccessLoginState) {
-                  return Text("Success: ");
-                } else if (state is ErrorLoginState) {
-                  
-                logger.d("Login error: ${state.error.message}");
-              
-                }
-                return Text("Enter credentials to login");
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-
