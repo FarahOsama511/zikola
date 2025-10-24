@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import '../../../../core/networking/api_endpoints.dart';
 import '../../../../main.dart';
 
-class ItemWebservice {
+class GetMyOrdersWebservice {
   late Dio dio;
-  ItemWebservice() {
+  GetMyOrdersWebservice() {
     BaseOptions baseOptions = BaseOptions(
       baseUrl: ApiEndpoints.baseUrl,
       receiveDataWhenStatusError: true,
@@ -15,13 +15,13 @@ class ItemWebservice {
     dio = Dio(baseOptions);
   }
 
-  Future<dynamic> getItems() async {
+  Future<dynamic> getMyOrders() async {
     dio.options.headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $savedToken",
     };
 
-    Response response = await dio.get(ApiEndpoints.items);
+    Response response = await dio.get(ApiEndpoints.myOrders);
     logger.d(response.statusCode);
     return response.data;
   }

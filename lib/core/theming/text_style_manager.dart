@@ -45,6 +45,11 @@ class TextStyleManager {
     fontWeight: FontWeight.bold,
     color: ColorManager.secondColor,
   );
+  static TextStyle font15Bold = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.bold,
+    color: ColorManager.secondColor,
+  );
   static TextStyle font24Bold = TextStyle(
     fontSize: 24.sp,
     fontWeight: FontWeight.bold,

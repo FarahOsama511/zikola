@@ -11,6 +11,7 @@ class BuildWidgetTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String?)? validator;
   Function(String)? onChanged;
+  final int? maxLines;
   BuildWidgetTextFormField({
     super.key,
     required this.hintText,
@@ -20,12 +21,15 @@ class BuildWidgetTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.validator,
     this.onChanged,
+    this.maxLines,
   });
 
   @override
   Widget build(BuildContext context) {
     return Form(
       child: TextFormField(
+        maxLines: maxLines ?? 1,
+        autocorrect: true,
         style: TextStyleManager.font15RegularBlack,
         controller: controller,
         obscureText: isObscureText ?? false,

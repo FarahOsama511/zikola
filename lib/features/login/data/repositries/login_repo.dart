@@ -12,6 +12,7 @@ class LoginRepo {
     try {
       final response = await loginWebservice.login(username, password);
       await SharedprefHelper.setSecurityString("token", response['token']);
+      savedToken = response['token'];
       logger.d("====${response['token']}");
       return Right(response['token']);
     } catch (e) {

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/item_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/data/repositiries/get_my_orders_repo.dart';
 import 'package:zikola/features/Home/data/repositiries/item_repo.dart';
+import 'package:zikola/features/Home/data/webservices/get_my_orders_webservice.dart';
 import 'package:zikola/features/Home/data/webservices/item_webservice.dart';
-import 'package:zikola/features/Home/presentation/screens/home_screen.dart';
 import 'package:zikola/main.dart';
 import '../../features/Home/presentation/widgets/bottom_nav_bar.dart';
 import '../../features/login/bussines logic/login_cubit.dart';
@@ -16,6 +18,10 @@ final LoginRepo loginRepo = LoginRepo(LoginWebservice());
 final LoginCubit loginCubit = LoginCubit(loginRepo);
 final ItemRepo itemRepo = ItemRepo(ItemWebservice());
 final ItemCubit itemCubit = ItemCubit(itemRepo);
+final GetMyOrdersRepo getMyOrdersRepo = GetMyOrdersRepo(
+  GetMyOrdersWebservice(),
+);
+final GetMyOrdersCubit getMyOrdersCubit = GetMyOrdersCubit(getMyOrdersRepo);
 final GoRouter router = GoRouter(
   routes: [
     GoRoute(
@@ -32,8 +38,14 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => BlocProvider(
-        create: (context) => itemCubit,
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider<ItemCubit>(create: (BuildContext context) => itemCubit),
+          BlocProvider<GetMyOrdersCubit>(
+            create: (BuildContext context) => getMyOrdersCubit,
+          ),
+        ],
+
         child: BottomNavigation(),
       ),
     ),

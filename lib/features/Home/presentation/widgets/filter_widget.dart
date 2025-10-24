@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zikola/core/theming/color_manager.dart';
 
 class CustomDropdownExample extends StatefulWidget {
   const CustomDropdownExample({super.key});
@@ -10,49 +12,45 @@ class CustomDropdownExample extends StatefulWidget {
 class _CustomDropdownExampleState extends State<CustomDropdownExample> {
   String selectedValue = "All Time";
 
-  final List<String> items = ["All Time", "Today", "This Week", "This Month"];
+  final List<DropdownMenuItem<String>> items = [
+    DropdownMenuItem(value: "All Time", child: Text("All Time")),
+    DropdownMenuItem(value: "Today", child: Text("Today")),
+    DropdownMenuItem(value: "This Week", child: Text("This Week")),
+    DropdownMenuItem(value: "This Month", child: Text("This Month")),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          height: 45,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF7F7F7), // نفس الرمادي الفاتح في التصميم
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFE0E0E0)), // خط خفيف جداً
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: selectedValue,
-              icon: const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: Colors.grey,
-              ),
-              isExpanded: true,
-              dropdownColor: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-                fontWeight: FontWeight.w500,
-              ),
-              onChanged: (newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                });
-              },
-              items: items.map((value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+    return SizedBox(
+      width: 250.w,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButtonFormField<String>(
+          initialValue: "Today",
+          dropdownColor: Colors.white,
+          decoration: InputDecoration(
+            filled: true,
+            focusColor: ColorManager.lightGrey,
+            enabled: false,
+
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 10,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.r),
+              borderSide: BorderSide(color: ColorManager.orangeColor),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.r),
+              borderSide: BorderSide(color: ColorManager.lightGrey),
             ),
           ),
+          items: items,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value!;
+            });
+          },
         ),
       ),
     );

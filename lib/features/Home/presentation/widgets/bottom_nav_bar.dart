@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/features/Home/presentation/screens/home_screen.dart';
 import 'package:zikola/features/Home/presentation/screens/order_history_screen.dart';
+import 'package:zikola/features/Home/presentation/screens/status_order_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   _BottomNavigationState createState() => _BottomNavigationState();
@@ -10,7 +11,11 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int currentindex = 0;
-  List<Widget> pages = [HomeScreen(), OrderHistoryScreen()];
+  List<Widget> pages = [
+    HomeScreen(),
+    StatusOrderScreen(),
+    OrderHistoryScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +38,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notes_sharp, size: 30),
+            icon: Icon(Icons.assignment, size: 30),
+            label: "Status",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history, size: 30),
             label: "History",
           ),
         ],

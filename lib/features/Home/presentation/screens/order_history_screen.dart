@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
-
+import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
+import '../widgets/build_my_orders_bloc_widget.dart';
 import '../widgets/filter_widget.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
@@ -13,11 +15,17 @@ class OrderHistoryScreen extends StatefulWidget {
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   @override
+  void initState() {
+    BlocProvider.of<GetMyOrdersCubit>(context).getAllOrders();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,12 +36,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   Icon(Icons.calendar_month, size: 40),
                 ],
               ),
+
               Text(
                 "Your past orders",
                 style: TextStyleManager.font20RegularGrey,
               ),
               SizedBox(height: 20.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.filter_alt_outlined,
@@ -43,6 +53,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   CustomDropdownExample(),
                 ],
               ),
+              SizedBox(height: 20.h),
+              Divider(),
+              SizedBox(height: 20.h),
+              BuildMyOrdersBlocWidget(),
             ],
           ),
         ),

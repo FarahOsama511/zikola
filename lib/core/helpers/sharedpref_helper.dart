@@ -12,6 +12,7 @@ class SharedprefHelper {
 
   static Future<String?> getSecurityString(String key) async {
     const flutterSecureStorage = FlutterSecureStorage();
+    logger.d("token:$savedToken");
     return await flutterSecureStorage.read(key: key);
   }
 
