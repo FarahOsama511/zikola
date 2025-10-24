@@ -8,22 +8,21 @@ import '../../../../main.dart';
 class AddMyOrderRepo {
   final AddMyOrderWebservices addMyOrderWebservices;
   AddMyOrderRepo(this.addMyOrderWebservices);
-  Future<RepoResult<List<OrdersModel>>> addMyOrder(
+  Future<RepoResult<OrdersModel>> addMyOrder(
     int numberOfSugarSpoons,
     String room,
     String notes,
+    String itemId,
   ) async {
     try {
       final response = await addMyOrderWebservices.addMyOrder(
         numberOfSugarSpoons,
         room,
         notes,
+        itemId,
       );
-      final results = response["data"];
-      final myOrders = (results as List)
-          .map((e) => OrdersModel.fromJson(e))
-          .toList();
-      return Right(myOrders);
+      final order = OrdersModel.fromJson(response["data"]);
+      return Right(order);
     } catch (e) {
       logger.d("error is $e");
       return left(ApiErrorHandler.handle(e));

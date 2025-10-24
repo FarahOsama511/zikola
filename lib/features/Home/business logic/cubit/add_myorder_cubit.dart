@@ -12,17 +12,19 @@ class AddMyOrderCubit extends Cubit<AddMyOrderState> {
     int numberOfSugarSpoons,
     String room,
     String notes,
+    String itemId,
   ) async {
     emit(AddMyOrderLoading());
     final result = await addMyOrderRepo.addMyOrder(
       numberOfSugarSpoons,
       room,
       notes,
+      itemId,
     );
 
     result.fold(
       (error) => emit(AddMyOrderError(error)),
-      (order) => emit(AddMyOrderSuccess(order)),
+      (order) => emit(AddMyOrderSuccess()),
     );
   }
 }

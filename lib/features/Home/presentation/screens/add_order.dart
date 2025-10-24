@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
 import '../widgets/details_my_order.dart';
 
 class AddOrder extends StatefulWidget {
@@ -60,7 +60,7 @@ class _AddOrderState extends State<AddOrder> {
                   ),
                 ),
               ),
-              DetailsMyOrder(),
+              buildAddOrderCubitWidget(),
             ],
           ),
         ),

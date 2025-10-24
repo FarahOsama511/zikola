@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
 import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
 
 import '../../../../main.dart';
+import '../../business logic/cubit/add_myorder_cubit.dart';
+import '../../business logic/cubit/add_myorder_state.dart';
 
 class DetailsMyOrder extends StatefulWidget {
   const DetailsMyOrder({super.key});
@@ -27,8 +30,9 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
 
   @override
   void dispose() {
-    super.dispose();
     roomNumberController.dispose();
+    notesController.dispose();
+    super.dispose();
   }
 
   void _checkIfFilled() {
@@ -42,6 +46,8 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AddMyOrderCubit>().state;
+    final isLoading = state is AddMyOrderLoading;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -92,9 +98,14 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
         ),
         SizedBox(height: 20.h),
         InkWell(
-          onTap: isButtonActive
+          onTap: isButtonActive && !isLoading
               ? () {
-                  logger.d("=========");
+                  context.read<AddMyOrderCubit>().addOrder(
+                    currentValue.toInt(),
+                    roomNumberController.text,
+                    notesController.text,
+                    "4",
+                  );
                 }
               : null,
           child: Container(
@@ -105,7 +116,7 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
               gradient: LinearGradient(
                 begin: AlignmentGeometry.center,
                 end: AlignmentGeometry.centerRight,
-                colors: isButtonActive
+                colors: isButtonActive && !isLoading
                     ? [Colors.orange, Colors.yellow]
                     : [
                         Colors.orange.withOpacity(.5),
@@ -123,11 +134,24 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
                 ),
               ],
             ),
-            child: Text(
-              "Submit Order",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
+            child: isLoading
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(color: Colors.white),
+                      SizedBox(width: 5.w),
+                      Text(
+                        textAlign: TextAlign.center,
+                        "Placing Order...",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  )
+                : Text(
+                    "Submit Order",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
           ),
         ),
       ],

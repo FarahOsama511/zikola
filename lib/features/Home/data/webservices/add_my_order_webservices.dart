@@ -14,11 +14,11 @@ class AddMyOrderWebservices {
 
     dio = Dio(baseOptions);
   }
-
   Future<dynamic> addMyOrder(
     int numberOfSugarSpoons,
     String room,
     String notes,
+    String itemId,
   ) async {
     dio.options.headers = {
       "Accept": "application/json",
@@ -26,11 +26,12 @@ class AddMyOrderWebservices {
     };
 
     Response response = await dio.post(
-      ApiEndpoints.myOrders,
+      ApiEndpoints.addOrder,
       data: {
         "numberOfSugarSpoons": numberOfSugarSpoons,
         "room": room,
         "notes": notes,
+        "itemId": itemId,
       },
     );
     logger.d(response.statusCode);
