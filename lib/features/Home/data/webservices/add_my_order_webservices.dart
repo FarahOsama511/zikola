@@ -18,7 +18,7 @@ class AddMyOrderWebservices {
     int numberOfSugarSpoons,
     String room,
     String notes,
-    String itemId,
+    int itemId,
   ) async {
     dio.options.headers = {
       "Accept": "application/json",
@@ -28,13 +28,14 @@ class AddMyOrderWebservices {
     Response response = await dio.post(
       ApiEndpoints.addOrder,
       data: {
-        "numberOfSugarSpoons": numberOfSugarSpoons,
+        "number_of_sugar_spoons": numberOfSugarSpoons,
         "room": room,
-        "notes": notes,
-        "itemId": itemId,
+        "order_notes": notes,
+        "item_id": itemId,
       },
     );
     logger.d(response.statusCode);
+  
     return response.data;
   }
 }

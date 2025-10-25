@@ -16,19 +16,21 @@ class _StatusOrderState extends State<StatusOrderScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Order Status ", style: TextStyleManager.font24Bold),
-              Text(
-                "Track your coffee orders",
-                style: TextStyleManager.font20RegularGrey,
-              ),
-              Divider(),
-              SizedBox(height: 20.h),
-              StatusOrderWidget(),
-              SizedBox(height: 20.h),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Order Status ", style: TextStyleManager.font24Bold),
+                Text(
+                  "Track your coffee orders",
+                  style: TextStyleManager.font20RegularGrey,
+                ),
+                Divider(),
+                SizedBox(height: 20.h),
+                StatusOrderWidget(),
+                SizedBox(height: 20.h),
+              ],
+            ),
           ),
         ),
       ),

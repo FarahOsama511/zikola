@@ -12,7 +12,7 @@ class AddMyOrderRepo {
     int numberOfSugarSpoons,
     String room,
     String notes,
-    String itemId,
+    int itemId,
   ) async {
     try {
       final response = await addMyOrderWebservices.addMyOrder(
@@ -22,6 +22,7 @@ class AddMyOrderRepo {
         itemId,
       );
       final order = OrdersModel.fromJson(response["data"]);
+      logger.d(order);
       return Right(order);
     } catch (e) {
       logger.d("error is $e");

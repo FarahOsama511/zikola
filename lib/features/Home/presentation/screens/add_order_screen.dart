@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zikola/features/Home/data/models/item_model.dart';
 import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
-import '../widgets/details_my_order.dart';
-
 class AddOrder extends StatefulWidget {
-  AddOrder({super.key});
+  final ItemModel item;
+  AddOrder({super.key,required this.item});
 
   @override
   State<AddOrder> createState() => _AddOrderState();
@@ -46,21 +46,21 @@ class _AddOrderState extends State<AddOrder> {
                           height: 150,
                           width: 120,
                           child: Image.network(
-                            "https://www.creativefabrica.com/wp-content/uploads/2024/04/03/Coffee-HD-image-Ai-Generated-Graphics-94750255-1.jpg",
+                            widget.item.imageUrl!,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       SizedBox(width: 20),
                       Text(
-                        "Espresso",
+                        "${widget.item.name}",
                         style: TextStyle(color: Colors.black, fontSize: 25),
                       ),
                     ],
                   ),
                 ),
               ),
-              buildAddOrderCubitWidget(),
+              buildAddOrderCubitWidget(widget.item.id??1),
             ],
           ),
         ),

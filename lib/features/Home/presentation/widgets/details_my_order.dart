@@ -4,24 +4,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
 import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
-
-import '../../../../main.dart';
 import '../../business logic/cubit/add_myorder_cubit.dart';
 import '../../business logic/cubit/add_myorder_state.dart';
 
 class DetailsMyOrder extends StatefulWidget {
-  const DetailsMyOrder({super.key});
+  final int itemId;
+   const DetailsMyOrder({super.key,required this.itemId});
 
   @override
   State<DetailsMyOrder> createState() => _DetailsMyOrderState();
 }
 
-double currentValue = 0;
+
+class _DetailsMyOrderState extends State<DetailsMyOrder> {
+  double currentValue = 0;
 TextEditingController roomNumberController = TextEditingController();
 TextEditingController notesController = TextEditingController();
 bool isButtonActive = false;
-
-class _DetailsMyOrderState extends State<DetailsMyOrder> {
   @override
   void initState() {
     super.initState();
@@ -104,7 +103,7 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
                     currentValue.toInt(),
                     roomNumberController.text,
                     notesController.text,
-                    "4",
+                    widget.itemId,
                   );
                 }
               : null,

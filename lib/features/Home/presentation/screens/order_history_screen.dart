@@ -56,7 +56,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               SizedBox(height: 20.h),
               Divider(),
               SizedBox(height: 20.h),
-              BuildMyOrdersBlocWidget(),
+              buildMyOrdersBlocWidget(),
             ],
           ),
         ),

@@ -5,6 +5,8 @@ import 'package:zikola/features/Home/presentation/screens/home_screen.dart';
 import 'package:zikola/features/Home/presentation/screens/order_history_screen.dart';
 import 'package:zikola/features/Home/presentation/screens/status_order_screen.dart';
 
+import '../screens/profile_screen.dart';
+
 class BottomNavigation extends StatefulWidget {
   _BottomNavigationState createState() => _BottomNavigationState();
 }
@@ -15,6 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomeScreen(),
     StatusOrderScreen(),
     OrderHistoryScreen(),
+    ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history, size: 30),
             label: "History",
+          ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.person, size: 30),
+            label: "Profile",
           ),
         ],
       ),

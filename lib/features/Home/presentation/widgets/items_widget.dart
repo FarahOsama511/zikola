@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
 
@@ -28,62 +29,65 @@ class _ItemsWidgetState extends State<ItemsWidget> {
 
         itemBuilder: (context, index) {
           final item = widget.item[index];
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.r),
-              border: Border.all(color: ColorManager.lightGrey),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(20.r),
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          height: 150.h,
-                          width: double.infinity,
-                          child: Image.network(
-                            item.imageUrl!,
-                            fit: BoxFit.cover,
+          return InkWell(
+            onTap: ()=>context.go('/addOrder',extra: item),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(color: ColorManager.lightGrey),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(20.r),
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            height: 150.h,
+                            width: double.infinity,
+                            child: Image.network(
+                              item.imageUrl!,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          right: 5,
-                          top: 5,
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                isfavorite = !isfavorite;
-                              });
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: ColorManager.lightGrey,
-                              child: Icon(
-                                isfavorite
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: isfavorite
-                                    ? ColorManager.orangeColor
-                                    : ColorManager.greyColor,
+                          Positioned(
+                            right: 5,
+                            top: 5,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  isfavorite = !isfavorite;
+                                });
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: ColorManager.lightGrey,
+                                child: Icon(
+                                  isfavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isfavorite
+                                      ? ColorManager.orangeColor
+                                      : ColorManager.greyColor,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Text(
-                    "${item.name}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                    SizedBox(height: 10.h),
+                    Text(
+                      "${item.name}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

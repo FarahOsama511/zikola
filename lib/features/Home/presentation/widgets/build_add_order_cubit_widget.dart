@@ -5,10 +5,11 @@ import 'package:zikola/features/Home/business%20logic/cubit/add_myorder_cubit.da
 import 'package:zikola/features/Home/business%20logic/cubit/add_myorder_state.dart';
 import 'package:zikola/features/Home/presentation/widgets/details_my_order.dart';
 
-Widget buildAddOrderCubitWidget() {
+
+Widget buildAddOrderCubitWidget(int itemId) {
   return BlocConsumer<AddMyOrderCubit, AddMyOrderState>(
     builder: (context, state) {
-      return DetailsMyOrder();
+      return DetailsMyOrder(itemId: itemId,);
     },
     listener: (context, state) {
       if (state is AddMyOrderError) {

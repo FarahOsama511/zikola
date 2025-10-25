@@ -37,8 +37,7 @@ class ApiErrorHandler {
 
         case DioExceptionType.connectionError:
           return ApiErrorModel(
-            message:
-                "Connection error occurred. Please check your internet connection.",
+            message: "Connection error occurred. Please check your internet connection.",
             statusCode: 0,
           );
 
@@ -46,30 +45,19 @@ class ApiErrorHandler {
           final response = error.response;
           if (response != null) {
             final statusCode = response.statusCode ?? 500;
+
+            // نحاول نجيب الرسالة اللي جايه من الباك إند
             String message = "Unexpected server error.";
             if (response.data is Map && response.data['message'] != null) {
-              if (response.data["errors"] != null) {
-                final errors = response.data["errors"] as Map<String, dynamic>;
-                if (errors.isNotEmpty) {
-                  final error = errors.entries
-                      .map((entry) => entry.value)
-                      .toList()
-                      .join(" , ");
-                  return ApiErrorModel(message: error, statusCode: statusCode);
-                } else {
-                  return ApiErrorModel(
-                    message: message,
-                    statusCode: statusCode,
-                  );
-                }
-              } else {
-                return ApiErrorModel(message: message, statusCode: statusCode);
-              }
+              message = response.data['message'];
             } else if (response.data is String) {
               message = response.data;
             }
 
-            return ApiErrorModel(message: message, statusCode: statusCode);
+            return ApiErrorModel(
+              message: message,
+              statusCode: statusCode,
+            );
           } else {
             return ApiErrorModel(
               message: "Server returned an invalid response.",
@@ -91,7 +79,10 @@ class ApiErrorHandler {
 
   static ApiErrorModel _handleUnknownError(dynamic error) {
     if (error is Error) {
-      return ApiErrorModel(message: error.toString(), statusCode: 500);
+      return ApiErrorModel(
+        message: error.toString(),
+        statusCode: 500,
+      );
     }
     return ApiErrorModel(
       message: "Unknown error occurred. Please try again later.",

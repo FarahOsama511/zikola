@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../data/models/orders_model.dart';
@@ -33,9 +35,9 @@ class _DetailsItemWidgetState extends State<DetailsItemWidget> {
     return Expanded(
       child: ListView.separated(
         separatorBuilder: (context, index) => SizedBox(height: 20),
-        itemCount: widget.allOrders.length,
+        itemCount: context.read<GetMyOrdersCubit>().completedOrder.length,
         itemBuilder: (context, index) {
-          final order = widget.allOrders[index];
+          final order = context.read<GetMyOrdersCubit>().completedOrder[index];
           final isOrder = isOrderList[index];
 
           return Container(
