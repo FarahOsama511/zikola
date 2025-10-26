@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
 import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
+
 class AddOrder extends StatefulWidget {
   final ItemModel item;
-  AddOrder({super.key,required this.item});
+  const AddOrder({super.key, required this.item});
 
   @override
   State<AddOrder> createState() => _AddOrderState();
@@ -60,7 +61,7 @@ class _AddOrderState extends State<AddOrder> {
                   ),
                 ),
               ),
-              buildAddOrderCubitWidget(widget.item.id??1),
+              buildAddOrderCubitWidget(widget.item.id ?? 1),
             ],
           ),
         ),

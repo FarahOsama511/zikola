@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zikola/features/Home/data/repositiries/log_out_repo.dart';
-import '../../../../main.dart';
+import '../../../../core/constants/strings.dart';
 import 'log_out_state.dart';
 
 class LogOutCubit extends Cubit<LogOutState> {

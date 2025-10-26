@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/log_out_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/log_out_state.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
+
 
 class ProfileScreen extends StatefulWidget {
 
-   ProfileScreen({super.key});
+ const  ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,7 +22,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+    
+    BlocListener<LogOutCubit,LogOutState>(listener: (context,state){
+      if(state is SuccessLogOut){
+        context.go('/');
+      }
+      else if(state is ErrorLogOut){
+           ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(state.error.message)));
+      }
+    },child:
+    
+    
+    Scaffold(
      
       body: SafeArea(child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -143,8 +160,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
              SizedBox(height: 80.h,),
          InkWell(
-          onTap: (){
-            BlocProvider.of<LogOutCubit>(context).logOut();
+          onTap: ()async{
+          await  BlocProvider.of<LogOutCubit>(context).logOut();
           },
           child: Container(
                width: double.infinity,
@@ -169,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
           
         ),
-      )),
-    );
+      ),),
+     ), );
   }
 }

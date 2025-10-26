@@ -84,13 +84,13 @@ bool isButtonActive = false;
         ),
         SizedBox(height: 20.h),
         Text("Room Number", style: TextStyleManager.font20Bold),
-        BuildWidgetTextFormField(
+        buildWidgetTextFormField(
           hintText: "room number",
           controller: roomNumberController,
         ),
         SizedBox(height: 20.h),
         Text("Special notes (Optional)", style: TextStyleManager.font20Bold),
-        BuildWidgetTextFormField(
+        buildWidgetTextFormField(
           hintText: "Any Special Requstes?",
           controller: notesController,
           maxLines: 3,

@@ -5,12 +5,17 @@ import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/features/login/bussines%20logic/login_cubit.dart';
 import 'package:zikola/features/login/bussines%20logic/login_state.dart';
 import 'package:zikola/features/login/presentation/widgets/login_box.dart';
+import '../../../../core/constants/strings.dart';
 
 Widget buildBlocWidget() {
   return BlocConsumer<LoginCubit, LoginState>(
     listener: (context, state) {
       if (state is SuccessLoginState) {
-        GoRouter.of(context).go("/home");
+        if (role == "admin") {
+          GoRouter.of(context).go("/home");
+        } else if (role == "barista") {
+          GoRouter.of(context).go("/homebarista");
+        }
       } else if (state is ErrorLoginState) {
         ScaffoldMessenger.of(
           context,

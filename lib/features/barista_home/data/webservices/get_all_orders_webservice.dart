@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/networking/api_endpoints.dart';
 
-class AddMyOrderWebservices {
+class GetAllOrdersWebservice {
   late Dio dio;
-  AddMyOrderWebservices() {
+  GetAllOrdersWebservice() {
     BaseOptions baseOptions = BaseOptions(
       baseUrl: ApiEndpoints.baseUrl,
       receiveDataWhenStatusError: true,
@@ -14,28 +14,31 @@ class AddMyOrderWebservices {
 
     dio = Dio(baseOptions);
   }
-  Future<dynamic> addMyOrder(
-    int numberOfSugarSpoons,
-    String room,
-    String notes,
-    int itemId,
-  ) async {
+
+  Future<dynamic> getAllOrders() async {
     dio.options.headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $savedToken",
     };
 
-    Response response = await dio.post(
-      ApiEndpoints.orders,
-      data: {
-        "number_of_sugar_spoons": numberOfSugarSpoons,
-        "room": room,
-        "order_notes": notes,
-        "item_id": itemId,
-      },
-    );
+    Response response = await dio.get(ApiEndpoints.orders);
     logger.d(response.statusCode);
+    return response.data;
+  }
 
+  Future<dynamic> updateOrder(String status, int orderId) async {
+    dio.options.headers = {
+      "Accept": "application/json",
+      "Authorization": "Bearer $savedToken",
+    };
+
+    Response response = await dio.put(
+      "${ApiEndpoints.changeStatusOrder}${orderId}",
+
+      data: {"status": status},
+    );
+    logger.d("🟡 response: $response");
+    logger.d(response.statusCode);
     return response.data;
   }
 }

@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyleManager.font20RegularGrey,
               ),
               SizedBox(height: 20.h),
-              BuildWidgetTextFormField(
+              buildWidgetTextFormField(
                 prefixIcon: Icon(
                   Icons.search,
                   size: 30,
