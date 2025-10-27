@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:zikola/core/routing/approutes.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/add_myorder_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/item_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/log_out_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/delete_my_order_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/item_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
 import 'package:zikola/features/Home/presentation/screens/add_order_screen.dart';
 import 'package:zikola/features/barista_home/business_logic/get_all_orders_cubit.dart';
@@ -27,7 +27,7 @@ final GoRouter router = GoRouter(
       ),
       redirect: (BuildContext context, GoRouterState state) {
         if (savedToken != null && savedToken!.isNotEmpty) {
-          if (role == "admin") {
+          if (role == "employee") {
             return AppRoutes.userHome;
           } else if (role == "barista") {
             return AppRoutes.baristaHome;
@@ -52,6 +52,9 @@ final GoRouter router = GoRouter(
           BlocProvider<LogOutCubit>(
             create: (BuildContext context) => di.setUp<LogOutCubit>(),
           ),
+          BlocProvider<DeleteOrderCubit>(
+            create: (BuildContext context) => di.setUp<DeleteOrderCubit>(),
+          ),
         ],
         child: BottomNavigation(),
       ),
@@ -75,9 +78,9 @@ final GoRouter router = GoRouter(
       path: AppRoutes.addOrder,
       builder: (context, state) {
         final item = state.extra as ItemModel;
-        return BlocProvider<AddMyOrderCubit>(
-          create: (BuildContext context) => di.setUp<AddMyOrderCubit>(),
-          child: AddOrder(item: item),
+        return BlocProvider(
+          create: (context) => di.setUp<GetMyOrdersCubit>(),
+          child: AddorEditOrderScreen(item: item),
         );
       },
     ),

@@ -1,4 +1,4 @@
-import '../../../../core/networking/api_error_model.dart';
+import '../../../../../core/networking/api_error_model.dart';
 
 abstract class AddMyOrderState {}
 

@@ -5,7 +5,6 @@ import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/features/barista_home/business_logic/get_all_orders_cubit.dart';
 import 'package:zikola/features/barista_home/business_logic/update_status_order_cubit.dart';
 import 'package:zikola/features/barista_home/business_logic/update_status_order_state.dart';
-import '../../../../core/constants/strings.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../Home/data/models/orders_model.dart';
 
@@ -63,7 +62,6 @@ Widget buildDetailsOrder(String status, List<OrdersModel> orders) {
                       BlocListener<UpdateOrderCubit, UpdateOrderState>(
                         listener: (context, state) {
                           if (state is SuccessUpdateOrder) {
-                            logger.d("==========");
                             context.read<GetAllOrdersCubit>().getAllOrders();
                           } else if (state is ErrorUpdateOrder) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -73,10 +71,24 @@ Widget buildDetailsOrder(String status, List<OrdersModel> orders) {
                         },
                         child: GestureDetector(
                           onTap: () {
-                            context.read<UpdateOrderCubit>().updateOrder(
-                              statusOrder[StatusOrder.onprogress] ?? "",
-                              order.id ?? 1,
+                            final currentStatus = StatusOrder.values.firstWhere(
+                              (e) => e.name == order.status,
+                              orElse: () => StatusOrder.waiting,
                             );
+                            final nextStatus = statusOrder[currentStatus];
+
+                            if (nextStatus != null) {
+                              context.read<UpdateOrderCubit>().updateOrder(
+                                nextStatus,
+                                order.id ?? 1,
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("الطلب مكتمل بالفعل ✅"),
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -145,8 +157,6 @@ String _translateStatus(String status) {
       return 'قيد التنفيذ';
     case 'completed':
       return 'تم الانتهاء';
-    case 'cancelled':
-      return 'تم الإلغاء';
     default:
       return status;
   }

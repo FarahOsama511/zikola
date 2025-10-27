@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
-import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
+import 'package:zikola/features/Home/presentation/widgets/details_my_order.dart';
+import '../../../../core/routing/approutes.dart';
 
-class AddOrder extends StatefulWidget {
+class AddorEditOrderScreen extends StatefulWidget {
   final ItemModel item;
-  const AddOrder({super.key, required this.item});
+  const AddorEditOrderScreen({super.key, required this.item});
 
   @override
-  State<AddOrder> createState() => _AddOrderState();
+  State<AddorEditOrderScreen> createState() => _AddorEditOrderScreenState();
 }
 
-class _AddOrderState extends State<AddOrder> {
-  double currentValue = 0;
-
+class _AddorEditOrderScreenState extends State<AddorEditOrderScreen> {
+  double numberOfSugar = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +24,13 @@ class _AddOrderState extends State<AddOrder> {
             children: [
               Row(
                 children: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
-                  Text("Place Order", style: TextStyle(fontSize: 30)),
+                  IconButton(
+                    onPressed: () {
+                      context.go(AppRoutes.userHome);
+                    },
+                    icon: Icon(Icons.arrow_back),
+                  ),
+                  Text("طلب اوردر ", style: TextStyle(fontSize: 30)),
                 ],
               ),
               Divider(),
@@ -47,7 +53,7 @@ class _AddOrderState extends State<AddOrder> {
                           height: 150,
                           width: 120,
                           child: Image.network(
-                            widget.item.imageUrl!,
+                            widget.item.imageUrl ?? "",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -61,7 +67,7 @@ class _AddOrderState extends State<AddOrder> {
                   ),
                 ),
               ),
-              buildAddOrderCubitWidget(widget.item.id ?? 1),
+              DetailsMyOrder(itemId: widget.item.id ?? 1),
             ],
           ),
         ),

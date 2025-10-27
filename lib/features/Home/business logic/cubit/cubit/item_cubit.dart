@@ -8,9 +8,8 @@ class ItemCubit extends Cubit<ItemState> {
   Future<void> getAllItems() async {
     emit(ItemLoading());
     final result = await itemRepo.getItems();
-    result.fold(
-      (error) => emit(ItemError(error)),
-      (items) => emit(ItemSuccess(items)),
-    );
+    result.fold((error) => emit(ItemError(error)), (items) {
+      return emit(ItemSuccess(items));
+    });
   }
 }

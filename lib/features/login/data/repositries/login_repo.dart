@@ -5,7 +5,6 @@ import 'package:zikola/core/networking/api_result.dart';
 import 'package:zikola/features/login/data/webservices/login_webservice.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/helpers/sharedpref_helper.dart';
-import '../../../../main.dart';
 
 class LoginRepo {
   final LoginWebservice loginWebservice;

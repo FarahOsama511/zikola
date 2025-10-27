@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomeScreen(),
     StatusOrderScreen(),
     OrderHistoryScreen(),
-    ProfileScreen()
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -38,19 +38,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined, size: 30),
-            label: "Home",
+            label: "الرئيسية",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment, size: 30),
-            label: "Status",
+            label: "الطلبات",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history, size: 30),
-            label: "History",
+            label: "السجل",
           ),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.person, size: 30),
-            label: "Profile",
+            label: "الملف الشخصي",
           ),
         ],
       ),

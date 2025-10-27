@@ -10,13 +10,13 @@ class CustomDropdownExample extends StatefulWidget {
 }
 
 class _CustomDropdownExampleState extends State<CustomDropdownExample> {
-  String selectedValue = "All Time";
+  String selectedValue = "كل الوقت";
 
   final List<DropdownMenuItem<String>> items = [
-    DropdownMenuItem(value: "All Time", child: Text("All Time")),
-    DropdownMenuItem(value: "Today", child: Text("Today")),
-    DropdownMenuItem(value: "This Week", child: Text("This Week")),
-    DropdownMenuItem(value: "This Month", child: Text("This Month")),
+    DropdownMenuItem(value: "كل الوقت", child: Text("كل الوقت")),
+    DropdownMenuItem(value: "اليوم", child: Text("اليوم")),
+    DropdownMenuItem(value: "هذا الأسبوع", child: Text("هذا الأسبوع")),
+    DropdownMenuItem(value: "هذا الشهر", child: Text("هذا الشهر")),
   ];
 
   @override
@@ -25,7 +25,7 @@ class _CustomDropdownExampleState extends State<CustomDropdownExample> {
       width: 250.w,
       child: DropdownButtonHideUnderline(
         child: DropdownButtonFormField<String>(
-          initialValue: "Today",
+          initialValue: "اليوم",
           dropdownColor: Colors.white,
           decoration: InputDecoration(
             filled: true,

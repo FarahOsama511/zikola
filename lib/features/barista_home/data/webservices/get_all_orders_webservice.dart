@@ -33,7 +33,7 @@ class GetAllOrdersWebservice {
     };
 
     Response response = await dio.put(
-      "${ApiEndpoints.changeStatusOrder}${orderId}",
+      "${ApiEndpoints.changeStatusOrder}$orderId",
 
       data: {"status": status},
     );

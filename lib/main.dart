@@ -8,10 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // لازم تكون أول سطر
+  WidgetsFlutterBinding.ensureInitialized();
 
-  await di.init(); // تهيئة dependency injection
-  await SharedprefHelper.cacheInitialization(); // تهيئة SharedPreferences
+  await di.init();
+  await SharedprefHelper.cacheInitialization();
 
   savedToken = await SharedprefHelper.getSecurityString("token");
   role = SharedprefHelper.getData("role");
@@ -34,18 +34,15 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routerConfig: router,
 
-          // 🔹 اللغة الافتراضية = العربية
           locale: const Locale('ar'),
           supportedLocales: const [Locale('ar'), Locale('en')],
 
-          // 🔹 عشان فلاتر يفهم الترجمات والاتجاه
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
 
-          // 🔹 بيخلي الاتجاه RTL
           localeResolutionCallback: (locale, supportedLocales) {
             if (locale == null) return const Locale('ar');
             for (var supportedLocale in supportedLocales) {

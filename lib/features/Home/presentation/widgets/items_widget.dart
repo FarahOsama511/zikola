@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zikola/core/constants/strings.dart';
+import 'package:zikola/core/routing/approutes.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
 
@@ -30,7 +32,10 @@ class _ItemsWidgetState extends State<ItemsWidget> {
         itemBuilder: (context, index) {
           final item = widget.item[index];
           return InkWell(
-            onTap: ()=>context.go('/addOrder',extra: item),
+            onTap: () {
+              context.go(AppRoutes.addOrder, extra: item);
+              logger.d(item);
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),

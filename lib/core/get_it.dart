@@ -1,13 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/add_myorder_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/item_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/log_out_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
-import 'package:zikola/features/Home/data/repositiries/add_my_order_repo.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/add_myorder_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/delete_my_order_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/edit_myorder_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/item_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/data/repositiries/my_order_repo.dart';
 import 'package:zikola/features/Home/data/repositiries/get_my_orders_repo.dart';
 import 'package:zikola/features/Home/data/repositiries/item_repo.dart';
 import 'package:zikola/features/Home/data/repositiries/log_out_repo.dart';
-import 'package:zikola/features/Home/data/webservices/add_my_order_webservices.dart';
+import 'package:zikola/features/Home/data/webservices/my_orders_webservice.dart';
 import 'package:zikola/features/Home/data/webservices/get_my_orders_webservice.dart';
 import 'package:zikola/features/Home/data/webservices/item_webservice.dart';
 import 'package:zikola/features/Home/data/webservices/log_out_webservices.dart';
@@ -28,19 +30,21 @@ Future<void> init() async {
   setUp.registerFactory(() => GetAllOrdersCubit(setUp()));
   setUp.registerFactory(() => LogOutCubit(setUp()));
   setUp.registerFactory(() => UpdateOrderCubit(setUp()));
+  setUp.registerFactory(() => DeleteOrderCubit(setUp()));
+  setUp.registerFactory(() => EditMyOrderCubit(setUp()));
 
   //repo
   setUp.registerLazySingleton(() => LoginRepo(setUp()));
   setUp.registerLazySingleton(() => ItemRepo(setUp()));
   setUp.registerLazySingleton(() => GetMyOrdersRepo(setUp()));
-  setUp.registerLazySingleton(() => AddMyOrderRepo(setUp()));
+  setUp.registerLazySingleton(() => MyOrderRepo(setUp()));
   setUp.registerLazySingleton(() => GetAllOrdersRepo(setUp()));
   setUp.registerLazySingleton(() => LogOutRepo(setUp()));
   //webservices
   setUp.registerLazySingleton(() => LoginWebservice());
   setUp.registerLazySingleton(() => ItemWebservice());
   setUp.registerLazySingleton(() => GetMyOrdersWebservice());
-  setUp.registerLazySingleton(() => AddMyOrderWebservices());
+  setUp.registerLazySingleton(() => MyOrdersWebservice());
   setUp.registerLazySingleton(() => GetAllOrdersWebservice());
   setUp.registerLazySingleton(() => LogOutWebservices());
 }

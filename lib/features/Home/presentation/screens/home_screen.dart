@@ -3,41 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/item_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/item_cubit.dart';
 import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
-import '../widgets/build_items_bloc_widget.dart';
+import '../../business logic/cubit/cubit/item_state.dart';
 import '../widgets/categories_widget.dart';
+import '../widgets/items_widget.dart' show ItemsWidget;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
+  String searchKeyword = "";
 
-  List<String> allItems = [
-    "Espresso",
-    "Cappuccino",
-    "Latte",
-    "Americano",
-    "Mocha",
-  ];
-  List<String> searchedItem = [];
-  searchFunction(String keyWord) {
+  void searchFunction(String keyWord) {
     setState(() {
-      searchedItem = allItems
-          .where((item) => item.toLowerCase().contains(keyWord.toLowerCase()))
-          .toList();
+      searchKeyword = keyWord.toLowerCase();
     });
   }
 
   @override
   void initState() {
-    BlocProvider.of<ItemCubit>(context).getAllItems();
-    searchedItem = allItems;
     super.initState();
+    BlocProvider.of<ItemCubit>(context).getAllItems();
   }
 
   @override
@@ -48,36 +40,88 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(10.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Good Morning! ☕", style: TextStyleManager.font20Bold),
-              Text(
-                "What would you like today?",
-                style: TextStyleManager.font20RegularGrey,
-              ),
-              SizedBox(height: 20.h),
-              buildWidgetTextFormField(
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 30,
-                  color: ColorManager.greyColor,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(10.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("صباح الخير! ☕", style: TextStyleManager.font20Bold),
+                Text(
+                  "ماذا تود أن تطلب اليوم؟",
+                  style: TextStyleManager.font20RegularGrey,
                 ),
-                hintText: "Search drinks ...",
-                controller: _searchController,
-                onChanged: (value) => searchFunction(value),
-              ),
-              SizedBox(height: 20.h),
-              CategoriesWidget(),
-              SizedBox(height: 20.h),
-              Divider(color: ColorManager.lightGrey),
-              SizedBox(height: 20.h),
-              BuildItemsBlocWidget(),
-            ],
+                SizedBox(height: 20.h),
+                buildWidgetTextFormField(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: ColorManager.greyColor,
+                  ),
+                  hintText: "ابحث عن مشروب ...",
+                  controller: _searchController,
+                  onChanged: searchFunction,
+                ),
+                SizedBox(height: 20.h),
+                CategoriesWidget(),
+                SizedBox(height: 20.h),
+                Divider(color: ColorManager.lightGrey),
+                SizedBox(height: 20.h),
+                BlocBuilder<ItemCubit, ItemState>(
+                  builder: (context, state) {
+                    if (state is ItemLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: ColorManager.primaryColor,
+                        ),
+                      );
+                    } else if (state is ItemSuccess) {
+                      final filteredItems = state.items
+                          .where(
+                            (item) => item.name!.toLowerCase().contains(
+                              searchKeyword,
+                            ),
+                          )
+                          .toList();
+                      if (filteredItems.isNotEmpty) {
+                        return ItemsWidget(item: filteredItems);
+                      } else {
+                        return Center(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: ColorManager.lightGrey,
+                                radius: 30.r,
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                              Text(
+                                "No drinks found",
+                                style: TextStyleManager.font15RegularBlack,
+                              ),
+                              Text(
+                                "Try adjusting your search or filters",
+                                style: TextStyleManager.font15RegularGrey,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    } else if (state is ItemError) {
+                      return Center(child: Text(state.error.message));
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

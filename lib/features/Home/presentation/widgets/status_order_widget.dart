@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
-import 'package:zikola/features/Home/presentation/widgets/details_status_order.dart';
-import '../../../../core/theming/text_style_manager.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
+import '../../business logic/cubit/my_orders_state.dart';
+import 'build_orders_by_status_widget.dart';
 
 class StatusOrderWidget extends StatefulWidget {
   const StatusOrderWidget({super.key});
+
   @override
   State<StatusOrderWidget> createState() => _StatusOrderWidgetState();
 }
 
 class _StatusOrderWidgetState extends State<StatusOrderWidget> {
-  String selectedStatus = "Pending";
+  String selectedStatus = "قيد الانتظار";
+
   void selectStatus(String status) {
     setState(() {
       selectedStatus = status;
@@ -23,84 +24,38 @@ class _StatusOrderWidgetState extends State<StatusOrderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: ColorManager.lightGrey,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              buildStatusButton("Pending"),
-              buildStatusButton("In Progress"),
-              buildStatusButton("Completed"),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        if (selectedStatus == "Pending")
-          DetailsStatusOrder(
-            myOrders: context.read<GetMyOrdersCubit>().pendingOrder,
-            state: "Pending",
-            backgroundColor: ColorManager.primaryColor,
-            statusOrder: InkWell(
-              //هكتب كود الغاء الاوردر
-              onTap: () {},
-              child: Container(
-                height: 30.h,
-                padding: EdgeInsets.symmetric(vertical: 5.h),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  " X      Cancel Order",
-                  style: TextStyleManager.font15Bold.copyWith(
-                    color: Colors.red,
-                  ),
-                ),
-              ),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: ColorManager.lightGrey,
+              borderRadius: BorderRadius.circular(20.r),
             ),
-          )
-        else if (selectedStatus == "OnProgress")
-          DetailsStatusOrder(
-            myOrders: context.read<GetMyOrdersCubit>().acceptedOrder,
-            state: "OnProgress",
-            backgroundColor: ColorManager.orangeColor,
-            statusOrder: Column(
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      " \"Extra hot please\" ",
-                      style: TextStyleManager.font20RegularGrey,
-                    ),
-                    Text(
-                      " being prepared",
-                      style: TextStyleManager.font15RegularGrey.copyWith(
-                        color: ColorManager.orangeColor,
-                      ),
-                    ),
-                  ],
-                ),
+                buildStatusButton("قيد الانتظار"),
+                buildStatusButton("قيد التحضير"),
+                buildStatusButton("تم الاكتمال"),
               ],
             ),
-          )
-        else
-          DetailsStatusOrder(
-            myOrders: context.read<GetMyOrdersCubit>().completedOrder,
-            state: "Completed",
-            backgroundColor: Colors.green,
-            statusOrder: SizedBox(),
           ),
-      ],
+          SizedBox(height: 20.h),
+          BlocBuilder<GetMyOrdersCubit, MyOrdersState>(
+            builder: (context, state) {
+              return buildOrdersByState(
+                selectedStatus: selectedStatus,
+                state: state,
+                context: context,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -108,9 +63,7 @@ class _StatusOrderWidgetState extends State<StatusOrderWidget> {
     final bool isSelected = selectedStatus == status;
 
     return GestureDetector(
-      onTap: () {
-        selectStatus(status);
-      },
+      onTap: () => selectStatus(status),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),

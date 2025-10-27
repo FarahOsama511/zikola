@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/repositiries/add_my_order_repo.dart';
+import '../../../data/repositiries/my_order_repo.dart';
 import 'add_myorder_state.dart';
 
 class AddMyOrderCubit extends Cubit<AddMyOrderState> {
-  final AddMyOrderRepo addMyOrderRepo;
+  final MyOrderRepo addMyOrderRepo;
   AddMyOrderCubit(this.addMyOrderRepo) : super(AddMyOrderInitial());
 
   Future<void> addOrder(

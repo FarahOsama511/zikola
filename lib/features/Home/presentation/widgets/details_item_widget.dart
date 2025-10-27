@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
+import '../../business logic/cubit/cubit/add_myorder_cubit.dart';
 import '../../data/models/orders_model.dart';
 
 class DetailsItemWidget extends StatefulWidget {
   final List<OrdersModel> allOrders;
-  DetailsItemWidget({super.key, required this.allOrders});
+  const DetailsItemWidget({super.key, required this.allOrders});
 
   @override
   State<DetailsItemWidget> createState() => _DetailsItemWidgetState();
@@ -34,7 +36,7 @@ class _DetailsItemWidgetState extends State<DetailsItemWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(height: 20),
+        separatorBuilder: (context, index) => SizedBox(height: 20.h),
         itemCount: context.read<GetMyOrdersCubit>().completedOrder.length,
         itemBuilder: (context, index) {
           final order = context.read<GetMyOrdersCubit>().completedOrder[index];
@@ -78,7 +80,7 @@ class _DetailsItemWidgetState extends State<DetailsItemWidget> {
                         ),
                         child: Text(
                           textAlign: TextAlign.center,
-                          "Completed",
+                          "مكتمل",
                           style: TextStyleManager.font16BoldWhite.copyWith(
                             fontSize: 14.sp,
                           ),
@@ -94,11 +96,11 @@ class _DetailsItemWidgetState extends State<DetailsItemWidget> {
                         style: TextStyleManager.font15RegularGrey,
                       ),
                       Text(
-                        "${DateFormat('ddMMMyyyy').format(order.createdAt!)} at ${DateFormat('h:mm').format(order.createdAt!)}",
+                        "${DateFormat('dd MMM yyyy').format(order.createdAt!)} في ${DateFormat('h:mm').format(order.createdAt!)}",
                         style: TextStyleManager.font15RegularGrey,
                       ),
                       Text(
-                        "${order.numberOfSugarSpoons} sugar spoons",
+                        "${order.numberOfSugarSpoons} ملاعق سكر",
                         style: TextStyleManager.font15RegularGrey,
                       ),
                     ],
@@ -107,33 +109,44 @@ class _DetailsItemWidgetState extends State<DetailsItemWidget> {
                 SizedBox(height: 20.h),
                 Divider(endIndent: 10, indent: 10),
                 SizedBox(height: 20.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: InkWell(
-                    // 🔹 استدعاء الفانكشن بدل الكود الطويل
-                    onTap: () => toggleReorder(index),
-                    child: Container(
-                      height: 30.h,
-                      padding: EdgeInsets.symmetric(vertical: 5.h),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: isOrder
-                            ? ColorManager.orangeColor
-                            : Colors.transparent,
-                        border: Border.all(color: ColorManager.lightGrey),
-                        borderRadius: BorderRadius.circular(20.r),
+                BuildAddOrderCubitWidget(
+                  itemId: order.item?.id ?? 1,
+                  child: (_, providerContext) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: InkWell(
+                        onTap: () {
+                          providerContext.read<AddMyOrderCubit>().addOrder(
+                            order.numberOfSugarSpoons ?? 0,
+                            order.room ?? "",
+                            order.orderNotes ?? "",
+                            order.item?.id ?? 0,
+                          );
+                        },
+                        child: Container(
+                          height: 30.h,
+                          padding: EdgeInsets.symmetric(vertical: 5.h),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: isOrder
+                                ? ColorManager.orangeColor
+                                : Colors.transparent,
+                            border: Border.all(color: ColorManager.lightGrey),
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            isOrder ? "تم إعادة الطلب" : "إعادة الطلب",
+                            style: isOrder
+                                ? TextStyleManager.font16BoldWhite.copyWith(
+                                    fontSize: 15.sp,
+                                  )
+                                : TextStyleManager.font15Bold,
+                          ),
+                        ),
                       ),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Reorder",
-                        style: isOrder
-                            ? TextStyleManager.font16BoldWhite.copyWith(
-                                fontSize: 15.sp,
-                              )
-                            : TextStyleManager.font15Bold,
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ],
             ),
