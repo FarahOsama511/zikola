@@ -7,8 +7,10 @@ import 'package:zikola/core/theming/text_style_manager.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_cubit.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_state.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
+import 'package:zikola/features/Home/data/models/orders_model.dart';
 import '../../../../core/routing/approutes.dart';
 import '../../business logic/cubit/my_orders_state.dart';
+import '../widgets/settings_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,8 +20,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isDark = false;
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -57,106 +57,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 160,
-                        right: 20,
-                        left: 20,
-                        child: Container(
-                          height: 130.h,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 40.w,
-                            vertical: 14.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 9,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.sunny, size: 35),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "الوضع الداكن",
-                                        style: TextStyleManager.font15Bold,
-                                      ),
-                                      Text(
-                                        isDark ? "مفعل" : "غير مفعل",
-                                        style: TextStyleManager.font15Bold
-                                            .copyWith(
-                                              color: ColorManager.greyColor,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Switch(
-                                    inactiveThumbColor: Colors.white,
-                                    activeThumbColor: ColorManager.orangeColor,
-                                    inactiveTrackColor: ColorManager.lightGrey,
-                                    value: isDark,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isDark = !isDark;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.lock, size: 35),
-                                    ),
-                                  ),
-
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "تغيير كلمة المرور",
-                                        style: TextStyleManager.font15Bold,
-                                      ),
-                                      Text(
-                                        "قم بتحديث كلمة المرور الخاصة بك",
-                                        style: TextStyleManager.font15Bold
-                                            .copyWith(
-                                              color: ColorManager.greyColor,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      SettingsCard(),
                     ],
                   ),
                   SizedBox(height: 70.h),
 
                   BlocBuilder<GetMyOrdersCubit, MyOrdersState>(
                     builder: (context, state) {
+                      final allOrders = context
+                          .read<GetMyOrdersCubit>()
+                          .allOrders;
+                      DateTime oneWeekAgo = DateTime.now().subtract(
+                        Duration(days: 7),
+                      );
+
+                      // نختار الأوردرات اللي حصلت خلال آخر أسبوع
+                      List<OrdersModel> recentOrders = allOrders
+                          .where(
+                            (order) => order.createdAt!.isAfter(oneWeekAgo),
+                          )
+                          .toList();
                       return Container(
                         height: 120.h,
                         width: double.infinity,
@@ -183,14 +103,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    "${context.read<GetMyOrdersCubit>().allOrders.length}",
+                                    "${allOrders.length}",
                                     textAlign: TextAlign.center,
                                     style: TextStyleManager.font15Bold.copyWith(
                                       color: ColorManager.orangeColor,
                                     ),
                                   ),
+
                                   Text(
-                                    "${context.read<GetMyOrdersCubit>().pendingOrder.length}",
+                                    "${recentOrders.length}",
                                     style: TextStyleManager.font15Bold.copyWith(
                                       color: ColorManager.primaryColor,
                                     ),
@@ -224,8 +145,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   SizedBox(height: 80.h),
                   InkWell(
-                    onTap: () async {
-                      await BlocProvider.of<LogOutCubit>(context).logOut();
+                    onTap: () {
+                      BlocProvider.of<LogOutCubit>(context).logOut();
                     },
                     child: Container(
                       width: double.infinity,

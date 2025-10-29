@@ -26,6 +26,7 @@ class GetMyOrdersCubit extends Cubit<MyOrdersState> {
       acceptedOrder = allOrders
           .where((order) => order.status == "onprogress")
           .toList();
+
       logger.d(allOrders);
     });
   }

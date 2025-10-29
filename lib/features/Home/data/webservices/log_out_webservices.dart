@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:zikola/core/networking/api_endpoints.dart';
 import '../../../../core/constants/strings.dart';
-import '../../../../main.dart';
 
 class LogOutWebservices {
   late Dio dio;

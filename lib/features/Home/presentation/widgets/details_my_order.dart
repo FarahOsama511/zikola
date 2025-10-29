@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zikola/core/constants/strings.dart';
 import 'package:zikola/core/theming/color_manager.dart';
 import 'package:zikola/core/theming/text_style_manager.dart';
+import 'package:zikola/features/Home/business%20logic/cubit/cubit/edit_myorder_cubit.dart';
 import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
 import '../../business logic/cubit/cubit/add_myorder_cubit.dart';
+import '../../data/models/orders_model.dart';
 import 'build_add_order_cubit_widget.dart';
 
 class DetailsMyOrder extends StatefulWidget {
   final int itemId;
-  const DetailsMyOrder({super.key, required this.itemId});
+  final OrdersModel? order;
+  final bool isEdit;
+  const DetailsMyOrder({
+    super.key,
+    required this.itemId,
+    this.order,
+    this.isEdit = false,
+  });
 
   @override
   State<DetailsMyOrder> createState() => _DetailsMyOrderState();
@@ -17,13 +27,20 @@ class DetailsMyOrder extends StatefulWidget {
 
 class _DetailsMyOrderState extends State<DetailsMyOrder> {
   double currentValue = 0;
-  TextEditingController roomNumberController = TextEditingController();
-  TextEditingController notesController = TextEditingController();
+  final TextEditingController roomNumberController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
+    if (widget.isEdit && widget.order != null) {
+      currentValue = widget.order!.numberOfSugarSpoons?.toDouble() ?? 0;
+      roomNumberController.text = widget.order!.room ?? "";
+      notesController.text = widget.order!.orderNotes ?? "";
+      isButtonActive = roomNumberController.text.isNotEmpty;
+    }
+
     roomNumberController.addListener(_checkIfFilled);
   }
 
@@ -37,14 +54,14 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
   void _checkIfFilled() {
     final isFilled = roomNumberController.text.isNotEmpty;
     if (isFilled != isButtonActive) {
-      setState(() {
-        isButtonActive = isFilled;
-      });
+      setState(() => isButtonActive = isFilled);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isEdit = widget.isEdit;
+    logger.d(isEdit);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Column(
@@ -76,18 +93,18 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
               value: currentValue,
               onChanged: (value) {
                 double rounded = (value * 2).round() / 2;
-                setState(() {
-                  currentValue = rounded;
-                });
+                setState(() => currentValue = rounded);
               },
             ),
           ),
+
           SizedBox(height: 20.h),
           Text("رقم الغرفة", style: TextStyleManager.font20Bold),
           buildWidgetTextFormField(
             hintText: "أدخل رقم الغرفة",
             controller: roomNumberController,
           ),
+
           SizedBox(height: 20.h),
           Text("ملاحظات خاصة (اختياري)", style: TextStyleManager.font20Bold),
           buildWidgetTextFormField(
@@ -96,10 +113,12 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
             maxLines: 3,
           ),
           SizedBox(height: 20.h),
+
           BuildAddOrderCubitWidget(
             itemId: widget.itemId,
+            isEdit: isEdit,
             child: (bool isLoading, providerContext) {
-              return addButton(isLoading, providerContext);
+              return addOrEditButton(isLoading, providerContext, isEdit);
             },
           ),
         ],
@@ -107,16 +126,26 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
     );
   }
 
-  Widget addButton(bool isLoading, BuildContext addButtonContext) {
+  Widget addOrEditButton(bool isLoading, BuildContext context, bool isEdit) {
     return InkWell(
       onTap: isButtonActive && !isLoading
           ? () {
-              addButtonContext.read<AddMyOrderCubit>().addOrder(
-                currentValue.toInt(),
-                roomNumberController.text,
-                notesController.text,
-                widget.itemId,
-              );
+              if (isEdit && widget.order != null) {
+                context.read<EditMyOrderCubit>().editOrder(
+                  orderId: widget.order!.id!,
+                  room: roomNumberController.text,
+                  numberOfSugarSpoons: currentValue.toInt(),
+                  notes: notesController.text,
+                  itemId: widget.order!.itemId!,
+                );
+              } else {
+                context.read<AddMyOrderCubit>().addOrder(
+                  currentValue.toInt(),
+                  roomNumberController.text,
+                  notesController.text,
+                  widget.itemId,
+                );
+              }
             }
           : null,
       child: Container(
@@ -152,15 +181,15 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
                     const CircularProgressIndicator(color: Colors.white),
                     SizedBox(width: 10.w),
                     Text(
-                      "جاري تنفيذ الطلب...",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      isEdit ? "جاري تحديث الطلب..." : "جاري تنفيذ الطلب...",
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],
                 )
               : Text(
-                  "إرسال الطلب",
+                  isEdit ? "تحديث الطلب" : "إرسال الطلب",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
         ),
       ),

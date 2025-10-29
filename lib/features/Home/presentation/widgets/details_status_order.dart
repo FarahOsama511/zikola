@@ -13,7 +13,7 @@ class DetailsStatusOrder extends StatefulWidget {
   final Widget statusOrder;
   final List<OrdersModel> myOrders;
   final Function(int orderId)? onCancel;
-  final Function(int orderId)? onEdit;
+  final Function(OrdersModel order)? onEdit;
 
   const DetailsStatusOrder({
     super.key,
@@ -137,9 +137,12 @@ class _DetailsStatusOrderState extends State<DetailsStatusOrder> {
                       InkWell(
                         onTap: () {
                           if (widget.onEdit != null) {
-                            widget.onEdit!(order.id!);
+                            widget.onEdit!(order);
                           }
-                          context.go(AppRoutes.addOrder);
+                          context.go(
+                            AppRoutes.addOrder,
+                            extra: {"order": order, "isEdit": true},
+                          );
                         },
                         child: Container(
                           height: 30.h,

@@ -7,37 +7,35 @@ class ApiErrorHandler {
       switch (error.type) {
         case DioExceptionType.connectionTimeout:
           return ApiErrorModel(
-            message: "Connection timeout. Please try again later.",
+            message: "انتهت مهلة الاتصال. من فضلك حاول مرة أخرى لاحقًا.",
             statusCode: 408,
           );
 
         case DioExceptionType.sendTimeout:
           return ApiErrorModel(
-            message: "Send timeout. The request took too long to send.",
+            message:
+                "انتهت مهلة الإرسال. استغرقت العملية وقتًا أطول من المتوقع.",
             statusCode: 408,
           );
 
         case DioExceptionType.receiveTimeout:
           return ApiErrorModel(
-            message: "Receive timeout. The server took too long to respond.",
+            message: "انتهت مهلة الاستقبال. الخادم لم يستجب في الوقت المحدد.",
             statusCode: 504,
           );
 
         case DioExceptionType.badCertificate:
           return ApiErrorModel(
-            message: "Bad certificate. Please check your network security.",
+            message: "شهادة الأمان غير صالحة. يرجى التحقق من إعدادات الشبكة.",
             statusCode: 495,
           );
 
         case DioExceptionType.cancel:
-          return ApiErrorModel(
-            message: "Request was cancelled.",
-            statusCode: 499,
-          );
+          return ApiErrorModel(message: "تم إلغاء الطلب.", statusCode: 499);
 
         case DioExceptionType.connectionError:
           return ApiErrorModel(
-            message: "Connection error occurred. Please check your internet connection.",
+            message: "حدث خطأ في الاتصال. تأكد من اتصالك بالإنترنت.",
             statusCode: 0,
           );
 
@@ -46,21 +44,17 @@ class ApiErrorHandler {
           if (response != null) {
             final statusCode = response.statusCode ?? 500;
 
-            // نحاول نجيب الرسالة اللي جايه من الباك إند
-            String message = "Unexpected server error.";
+            String message = "حدث خطأ غير متوقع من الخادم.";
             if (response.data is Map && response.data['message'] != null) {
-              message = response.data['message'];
+              message = _translateMessage(response.data['message']);
             } else if (response.data is String) {
-              message = response.data;
+              message = _translateMessage(response.data);
             }
 
-            return ApiErrorModel(
-              message: message,
-              statusCode: statusCode,
-            );
+            return ApiErrorModel(message: message, statusCode: statusCode);
           } else {
             return ApiErrorModel(
-              message: "Server returned an invalid response.",
+              message: "الخادم أرجع استجابة غير صالحة.",
               statusCode: 500,
             );
           }
@@ -70,23 +64,44 @@ class ApiErrorHandler {
           return _handleUnknownError(error);
       }
     } else {
-      return ApiErrorModel(
-        message: "An unexpected error occurred.",
-        statusCode: 500,
-      );
+      return ApiErrorModel(message: "حدث خطأ غير متوقع.", statusCode: 500);
     }
   }
 
   static ApiErrorModel _handleUnknownError(dynamic error) {
     if (error is Error) {
-      return ApiErrorModel(
-        message: error.toString(),
-        statusCode: 500,
-      );
+      return ApiErrorModel(message: error.toString(), statusCode: 500);
     }
     return ApiErrorModel(
-      message: "Unknown error occurred. Please try again later.",
+      message: "حدث خطأ غير معروف. حاول مرة أخرى لاحقًا.",
       statusCode: 500,
     );
+  }
+
+  static String _translateMessage(String message) {
+    final lower = message.toLowerCase();
+
+    if (lower.contains("invalid") || lower.contains("wrong")) {
+      return "البيانات غير صحيحة. يرجى التحقق من المدخلات.";
+    } else if (lower.contains("unauthorized") ||
+        lower.contains("forbidden") ||
+        lower.contains("token")) {
+      return "ليس لديك صلاحية للوصول إلى هذا المحتوى.";
+    } else if (lower.contains("not found")) {
+      return "العنصر المطلوب غير موجود.";
+    } else if (lower.contains("timeout")) {
+      return "انتهت المهلة أثناء الاتصال بالخادم.";
+    } else if (lower.contains("server") || lower.contains("internal")) {
+      return "حدث خطأ في الخادم. حاول لاحقًا.";
+    } else if (lower.contains("network")) {
+      return "تحقق من اتصالك بالإنترنت.";
+    } else if (lower.contains("email")) {
+      return "البريد الإلكتروني غير صحيح أو مستخدم بالفعل.";
+    } else if (lower.contains("password")) {
+      return "كلمة المرور غير صحيحة.";
+    } else if (lower.contains("exists")) {
+      return "العنصر موجود بالفعل.";
+    }
+    return message.length < 100 ? message : "حدث خطأ أثناء تنفيذ الطلب.";
   }
 }

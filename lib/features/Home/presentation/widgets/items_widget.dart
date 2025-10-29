@@ -33,7 +33,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
           final item = widget.item[index];
           return InkWell(
             onTap: () {
-              context.go(AppRoutes.addOrder, extra: item);
+              context.go(AppRoutes.addOrder, extra: {"item": item});
               logger.d(item);
             },
             child: Container(

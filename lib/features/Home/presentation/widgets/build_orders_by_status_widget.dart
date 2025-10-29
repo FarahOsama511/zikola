@@ -40,8 +40,8 @@ Widget buildOrdersByState({
     return DetailsStatusOrder(
       myOrders: filteredOrders,
       state: selectedStatus,
-      onEdit: (orderId) {
-        context.go(AppRoutes.addOrder, extra: orderId);
+      onEdit: (order) {
+        context.go(AppRoutes.addOrder, extra: order);
       },
       onCancel: (orderId) {
         context.read<DeleteOrderCubit>().deleteOrder(orderId);

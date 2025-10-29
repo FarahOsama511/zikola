@@ -46,7 +46,7 @@ class MyOrderRepo {
     int numberOfSugarSpoons,
     String room,
     String orderNotes,
-    int itemId,
+    String itemId,
   ) async {
     try {
       final response = await myOrdersWebservice.editMyOrder(
@@ -56,8 +56,9 @@ class MyOrderRepo {
         orderNotes,
         itemId,
       );
-      logger.d(response);
-      return Right(response);
+      final order = OrdersModel.fromJson(response["data"]);
+      logger.d(order);
+      return Right(order);
     } catch (e) {
       logger.d("error is $e");
       return left(ApiErrorHandler.handle(e));

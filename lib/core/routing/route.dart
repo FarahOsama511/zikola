@@ -7,7 +7,8 @@ import 'package:zikola/features/Home/business%20logic/cubit/cubit/item_cubit.dar
 import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_cubit.dart';
 import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
 import 'package:zikola/features/Home/data/models/item_model.dart';
-import 'package:zikola/features/Home/presentation/screens/add_order_screen.dart';
+import 'package:zikola/features/Home/data/models/orders_model.dart';
+import 'package:zikola/features/Home/presentation/screens/add_or_edit_order_screen.dart';
 import 'package:zikola/features/barista_home/business_logic/get_all_orders_cubit.dart';
 import 'package:zikola/features/barista_home/business_logic/update_status_order_cubit.dart';
 import 'package:zikola/features/barista_home/presentation/screens/barista_screen.dart';
@@ -77,10 +78,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addOrder,
       builder: (context, state) {
-        final item = state.extra as ItemModel;
+        final extra = state.extra as Map<String, dynamic>?;
+        final order = extra?['order'] as OrdersModel?;
+        final item = extra?['item'] as ItemModel?;
+        final isEdit = extra?['isEdit'] as bool? ?? false;
+
         return BlocProvider(
           create: (context) => di.setUp<GetMyOrdersCubit>(),
-          child: AddorEditOrderScreen(item: item),
+          child: AddorEditOrderScreen(order: order, item: item, isEdit: isEdit),
         );
       },
     ),

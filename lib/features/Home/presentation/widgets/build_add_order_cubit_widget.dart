@@ -13,7 +13,6 @@ class BuildAddOrderCubitWidget extends StatelessWidget {
   final int itemId;
   final bool isEdit;
   final Widget Function(bool, BuildContext) child;
-
   const BuildAddOrderCubitWidget({
     super.key,
     required this.itemId,
@@ -41,7 +40,9 @@ class BuildAddOrderCubitWidget extends StatelessWidget {
                   ScaffoldMessenger.of(providerContext).showSnackBar(
                     const SnackBar(content: Text("تم تعديل الطلب بنجاح")),
                   );
-                  BlocProvider.of<GetMyOrdersCubit>(context).getAllOrders();
+                  BlocProvider.of<GetMyOrdersCubit>(
+                    providerContext,
+                  ).getAllOrders();
                   providerContext.go(AppRoutes.userHome);
                 }
               },
@@ -67,7 +68,9 @@ class BuildAddOrderCubitWidget extends StatelessWidget {
                   ScaffoldMessenger.of(providerContext).showSnackBar(
                     const SnackBar(content: Text("تم طلب الأوردر بنجاح")),
                   );
-                  BlocProvider.of<GetMyOrdersCubit>(context).getAllOrders();
+                  BlocProvider.of<GetMyOrdersCubit>(
+                    providerContext,
+                  ).getAllOrders();
                   providerContext.go(AppRoutes.userHome);
                 }
               },

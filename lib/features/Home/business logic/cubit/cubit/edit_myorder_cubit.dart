@@ -12,7 +12,7 @@ class EditMyOrderCubit extends Cubit<EditMyOrderState> {
     required int numberOfSugarSpoons,
     required String room,
     required String notes,
-    required int itemId,
+    required String itemId,
   }) async {
     emit(EditMyOrderLoading());
 
