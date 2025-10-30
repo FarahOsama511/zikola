@@ -2,25 +2,23 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SharedprefHelper {
-
   static late SharedPreferences sharedPref;
-    static cacheInitialization() async {
+  static cacheInitialization() async {
     sharedPref = await SharedPreferences.getInstance();
   }
-static Future<bool> setData(String key,String value)async{
-  return  await sharedPref.setString(key, value);
-}
- static String getData(String key){
-    return sharedPref.getString(key)??"";
-}
- static Future<bool> deleteData({required String key}) async {
-    return await sharedPref.remove(key);
+
+  static Future<bool> setData(String key, String value) async {
+    return await sharedPref.setString(key, value);
   }
 
+  static String? getData(String key) {
+    return sharedPref.getString(key) ?? "";
+  }
 
-
+  static Future<bool> deleteData({required String key}) async {
+    return await sharedPref.remove(key);
+  }
 
   static setSecurityString(String key, String value) async {
     const flutterSecureStorage = FlutterSecureStorage();

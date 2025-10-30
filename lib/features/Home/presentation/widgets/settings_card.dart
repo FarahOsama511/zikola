@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/strings.dart';
+import '../../../../core/cubit/theme_app_cubit.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 
@@ -11,9 +14,14 @@ class SettingsCard extends StatefulWidget {
   State<SettingsCard> createState() => _SettingsCardState();
 }
 
-bool isDark = false;
-
 class _SettingsCardState extends State<SettingsCard> {
+  @override
+  void initState() {
+    final currentTheme = context.read<ThemeAppCubit>().currentTheme;
+    isDark = currentTheme == AppTheme.dark;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -63,8 +71,10 @@ class _SettingsCardState extends State<SettingsCard> {
                   value: isDark,
                   onChanged: (value) {
                     setState(() {
-                      isDark = !isDark;
+                      isDark = value;
                     });
+                    final newTheme = isDark ? AppTheme.dark : AppTheme.light;
+                    context.read<ThemeAppCubit>().selectAppTheme(newTheme);
                   },
                 ),
               ],
