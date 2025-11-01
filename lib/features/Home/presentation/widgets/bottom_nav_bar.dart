@@ -24,6 +24,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       body: IndexedStack(index: currentindex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         selectedItemColor: ColorManager.orangeColor,
         unselectedItemColor: ColorManager.greyColor,
         selectedFontSize: 15.sp,

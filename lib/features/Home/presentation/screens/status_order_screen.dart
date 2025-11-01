@@ -31,7 +31,7 @@ class _StatusOrderState extends State<StatusOrderScreen> {
         child: Scaffold(
           body: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -52,7 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   // عنوان التطبيق
                   Text(
                     "قهوة المكتب ☕",
-                    style: TextStyleManager.font20RegularBlack,
+                    style: TextStyleManager.font15Bold.copyWith(
+                      fontSize: 22.sp,
+                    ),
                   ),
 
                   SizedBox(height: 10.h),
@@ -65,19 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 20.h),
 
-                  SizedBox(
-                    height: 130.h,
-                    width: double.infinity,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.r),
-                      child: Image.asset(
-                        "assets/images/drinks.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 20.h),
                   buildBlocWidget(),
                 ],
               ),

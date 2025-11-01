@@ -14,11 +14,13 @@ import '../../features/barista_home/business_logic/update_status_order_cubit.dar
 import '../../features/barista_home/presentation/screens/barista_screen.dart';
 import '../../features/login/bussines logic/login_cubit.dart';
 import '../../features/login/presentation/screens/login_screen.dart';
+import '../../main.dart';
 import '../constants/strings.dart';
 import '../get_it.dart' as di;
 import 'approutes.dart';
 
 final GoRouter router = GoRouter(
+  navigatorKey: navigatorKey,
   routes: [
     GoRoute(
       path: AppRoutes.login,
@@ -47,9 +49,9 @@ final GoRouter router = GoRouter(
           BlocProvider<ItemCubit>(
             create: (BuildContext context) => di.setUp<ItemCubit>(),
           ),
-          BlocProvider<GetMyOrdersCubit>(
-            create: (BuildContext context) => di.setUp<GetMyOrdersCubit>(),
-          ),
+          // BlocProvider<GetMyOrdersCubit>(
+          //   create: (BuildContext context) => di.setUp<GetMyOrdersCubit>(),
+          // ),
           BlocProvider<LogOutCubit>(
             create: (BuildContext context) => di.setUp<LogOutCubit>(),
           ),

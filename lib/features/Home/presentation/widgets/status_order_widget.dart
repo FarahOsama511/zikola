@@ -34,7 +34,7 @@ class _StatusOrderWidgetState extends State<StatusOrderWidget> {
               color: ColorManager.lightGrey,
               borderRadius: BorderRadius.circular(20.r),
             ),
-            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+            padding: EdgeInsets.symmetric(vertical: 20.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

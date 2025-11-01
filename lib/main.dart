@@ -1,6 +1,8 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zikola_office/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
 import 'core/constants/strings.dart';
 import 'core/cubit/theme_app_cubit.dart';
 import 'core/cubit/theme_app_state.dart';
@@ -32,35 +34,43 @@ class ZikolaOffice extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
-        return BlocProvider(
-          create: (context) => ThemeAppCubit(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeAppCubit>(create: (context) => ThemeAppCubit()),
+            BlocProvider(create: (context) => di.setUp<GetMyOrdersCubit>()),
+          ],
           child: Builder(
             builder: (context) {
               return BlocBuilder<ThemeAppCubit, ThemeAppState>(
                 builder: (context, state) {
                   logger.d(isDark);
-                  return MaterialApp.router(
-                    themeMode: context.read<ThemeAppCubit>().getTheme,
-                    theme: isDark ? ThemeData.dark() : ThemeData.light(),
-                    debugShowCheckedModeBanner: false,
-                    routerConfig: router,
-                    locale: const Locale('ar'),
-                    supportedLocales: const [Locale('ar'), Locale('en')],
-                    localizationsDelegates: const [
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    localeResolutionCallback: (locale, supportedLocales) {
-                      if (locale == null) return const Locale('ar');
-                      for (var supportedLocale in supportedLocales) {
-                        if (supportedLocale.languageCode ==
-                            locale.languageCode) {
-                          return supportedLocale;
+                  return DevicePreview(
+                    enabled: true,
+                    builder: (context) => MaterialApp.router(
+                      useInheritedMediaQuery: false,
+                      themeMode: context.read<ThemeAppCubit>().getTheme,
+                      theme: isDark ? ThemeData.dark() : ThemeData.light(),
+
+                      debugShowCheckedModeBanner: false,
+                      routerConfig: router,
+                      locale: const Locale('ar'),
+                      supportedLocales: const [Locale('ar'), Locale('en')],
+                      localizationsDelegates: const [
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      localeResolutionCallback: (locale, supportedLocales) {
+                        if (locale == null) return const Locale('ar');
+                        for (var supportedLocale in supportedLocales) {
+                          if (supportedLocale.languageCode ==
+                              locale.languageCode) {
+                            return supportedLocale;
+                          }
                         }
-                      }
-                      return const Locale('ar');
-                    },
+                        return const Locale('ar');
+                      },
+                    ),
                   );
                 },
               );

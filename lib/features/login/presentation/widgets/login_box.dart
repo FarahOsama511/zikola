@@ -54,7 +54,10 @@ class _LoginBoxState extends State<LoginBox> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("اسم المستخدم", style: TextStyleManager.font20Bold),
+                Text(
+                  "اسم المستخدم",
+                  style: TextStyleManager.font20Bold.copyWith(fontSize: 18.sp),
+                ),
                 buildWidgetTextFormField(
                   hintText: "اكتب اسم المستخدم",
                   controller: _userNameController,
@@ -67,7 +70,10 @@ class _LoginBoxState extends State<LoginBox> {
                 ),
                 SizedBox(height: 20.h),
 
-                Text("كلمة المرور", style: TextStyleManager.font20Bold),
+                Text(
+                  "كلمة المرور",
+                  style: TextStyleManager.font20Bold.copyWith(fontSize: 18.sp),
+                ),
                 buildWidgetTextFormField(
                   hintText: "أدخل كلمة المرور",
                   controller: _passwordController,

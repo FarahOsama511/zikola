@@ -28,7 +28,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,11 +46,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
                 SizedBox(height: 20.h),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(
                       Icons.filter_alt_outlined,
-                      size: 40,
+                      size: 28.sp,
                       color: ColorManager.greyColor,
                     ),
                     const CustomDropdownExample(),

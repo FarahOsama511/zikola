@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 "No drinks found",
-                                style: TextStyleManager.font15RegularBlack,
+                                style: TextStyleManager.font15MeduimBlack,
                               ),
                               Text(
                                 "Try adjusting your search or filters",

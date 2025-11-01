@@ -73,7 +73,7 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
             children: [
               Text("مستوى السكر", style: TextStyleManager.font15Bold),
               Text(
-                "${currentValue.toStringAsFixed(1)} ملعقة",
+                "${currentValue.toStringAsFixed(0)} ملعقة",
                 style: TextStyleManager.font15Bold.copyWith(
                   color: ColorManager.orangeColor,
                 ),
@@ -83,17 +83,20 @@ class _DetailsMyOrderState extends State<DetailsMyOrder> {
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               trackHeight: 20,
+
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
             ),
             child: Slider(
               min: 0,
               max: 5,
+
               activeColor: Colors.orange,
               thumbColor: Colors.white,
               value: currentValue,
               onChanged: (value) {
-                double rounded = (value * 2).round() / 2;
-                setState(() => currentValue = rounded);
+                setState(() {
+                  currentValue = value;
+                });
               },
             ),
           ),

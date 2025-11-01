@@ -88,7 +88,7 @@ class _SettingsCardState extends State<SettingsCard> {
                 Expanded(
                   child: IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.lock, size: 35),
+                    icon: const Icon(Icons.lock, size: 30),
                   ),
                 ),
 
@@ -103,6 +103,7 @@ class _SettingsCardState extends State<SettingsCard> {
                       "قم بتحديث كلمة المرور الخاصة بك",
                       style: TextStyleManager.font15Bold.copyWith(
                         color: ColorManager.greyColor,
+                        fontSize: 13.sp,
                       ),
                     ),
                   ],

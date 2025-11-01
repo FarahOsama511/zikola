@@ -38,7 +38,7 @@ class ThemeAppCubit extends Cubit<ThemeAppState> {
     if (themeName != null) {
       currentTheme = AppTheme.values.firstWhere(
         (e) => e.name == themeName,
-        // orElse: () => AppTheme.system,
+        orElse: () => AppTheme.system,
       );
     }
     emit(AppChangedTheme());
