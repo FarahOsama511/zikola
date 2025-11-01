@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../business logic/cubit/cubit/my_orders_cubit.dart';
 import '../../business logic/cubit/my_orders_state.dart';
 import 'build_orders_by_status_widget.dart';
 

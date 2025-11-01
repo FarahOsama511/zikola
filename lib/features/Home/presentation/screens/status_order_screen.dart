@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/delete_my_order_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/delete_my_order_state.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
 import '../../../../core/theming/text_style_manager.dart';
+import '../../business logic/cubit/cubit/delete_my_order_cubit.dart';
+import '../../business logic/cubit/cubit/delete_my_order_state.dart';
+import '../../business logic/cubit/cubit/my_orders_cubit.dart';
 import '../widgets/status_order_widget.dart';
 
 class StatusOrderScreen extends StatefulWidget {

@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC7CxNKWDYHgSAjLcrs8Hk4O67sbY8fP7k',
-    appId: '1:1063184887557:android:242fb634c6bc15a84fd16c',
-    messagingSenderId: '1063184887557',
-    projectId: 'office-coffee-app',
-    storageBucket: 'office-coffee-app.firebasestorage.app',
+    apiKey: 'AIzaSyCyQ1vCDHBn9QDXP66swsRiHgE3sPxPxRA',
+    appId: '1:981357619609:android:bfc1f604c7940b80c2cb08',
+    messagingSenderId: '981357619609',
+    projectId: 'coffeeapp-729a2',
+    storageBucket: 'coffeeapp-729a2.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAu8k3oWuVJTGntue0ubO2VAC_QdQKVZd4',
-    appId: '1:1063184887557:ios:474433f2bc26435f4fd16c',
-    messagingSenderId: '1063184887557',
-    projectId: 'office-coffee-app',
-    storageBucket: 'office-coffee-app.firebasestorage.app',
+    apiKey: 'AIzaSyBrduGKYULJFIrspKvgjk8z7N4JIqMp4Nc',
+    appId: '1:981357619609:ios:05635a7262bdb49dc2cb08',
+    messagingSenderId: '981357619609',
+    projectId: 'coffeeapp-729a2',
+    storageBucket: 'coffeeapp-729a2.firebasestorage.app',
     iosBundleId: 'com.example.zikola',
   );
 }

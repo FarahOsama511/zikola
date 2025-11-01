@@ -20,6 +20,14 @@ class SharedprefHelper {
     return await sharedPref.remove(key);
   }
 
+  static Future<bool> setBoolData(String key, bool value) async {
+    return await sharedPref.setBool(key, value);
+  }
+
+  static bool? getBoolData(String key) {
+    return sharedPref.getBool(key) ?? false;
+  }
+
   static setSecurityString(String key, String value) async {
     const flutterSecureStorage = FlutterSecureStorage();
     debugPrint('Storing key: $key with value: $value');

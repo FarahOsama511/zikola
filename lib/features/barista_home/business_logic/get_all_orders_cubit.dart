@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zikola/features/barista_home/business_logic/get_all_orders_state.dart';
-import 'package:zikola/features/barista_home/data/repositiries/get_all_orders_repo.dart';
 import '../../../core/constants/strings.dart';
 import '../../Home/data/models/orders_model.dart';
+import '../data/repositiries/get_all_orders_repo.dart';
+import 'get_all_orders_state.dart';
 
 class GetAllOrdersCubit extends Cubit<GetAllOrdersState> {
   GetAllOrdersCubit(this.getAllOrdersRepo) : super(InitialGetAllOrders());

@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "1063184887557",
-    "project_id": "office-coffee-app",
-    "storage_bucket": "office-coffee-app.firebasestorage.app"
+    "project_number": "981357619609",
+    "project_id": "coffeeapp-729a2",
+    "storage_bucket": "coffeeapp-729a2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1063184887557:android:242fb634c6bc15a84fd16c",
+        "mobilesdk_app_id": "1:981357619609:android:bfc1f604c7940b80c2cb08",
         "android_client_info": {
           "package_name": "com.example.zikola"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1063184887557-d0acrbckq57611osdi414p30pusvv0p4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC7CxNKWDYHgSAjLcrs8Hk4O67sbY8fP7k"
+          "current_key": "AIzaSyCyQ1vCDHBn9QDXP66swsRiHgE3sPxPxRA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1063184887557-d0acrbckq57611osdi414p30pusvv0p4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

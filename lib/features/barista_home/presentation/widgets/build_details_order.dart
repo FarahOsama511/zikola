@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/features/barista_home/business_logic/get_all_orders_cubit.dart';
-import 'package:zikola/features/barista_home/business_logic/update_status_order_cubit.dart';
-import 'package:zikola/features/barista_home/business_logic/update_status_order_state.dart';
+import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../Home/data/models/orders_model.dart';
+import '../../business_logic/get_all_orders_cubit.dart';
+import '../../business_logic/update_status_order_cubit.dart';
+import '../../business_logic/update_status_order_state.dart';
 
 Widget buildDetailsOrder(String status, List<OrdersModel> orders) {
   return Expanded(

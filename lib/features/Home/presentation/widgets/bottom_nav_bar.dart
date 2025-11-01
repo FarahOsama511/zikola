@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/features/Home/presentation/screens/home_screen.dart';
-import 'package:zikola/features/Home/presentation/screens/order_history_screen.dart';
-import 'package:zikola/features/Home/presentation/screens/status_order_screen.dart';
 
+import '../../../../core/theming/color_manager.dart';
+import '../screens/home_screen.dart';
+import '../screens/order_history_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/status_order_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   _BottomNavigationState createState() => _BottomNavigationState();

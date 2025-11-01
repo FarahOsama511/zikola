@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
-import 'package:zikola/features/Home/presentation/widgets/build_add_order_cubit_widget.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../business logic/cubit/cubit/add_myorder_cubit.dart';
+import '../../business logic/cubit/cubit/my_orders_cubit.dart';
 import '../../data/models/orders_model.dart';
+import 'build_add_order_cubit_widget.dart';
 
 class DetailsItemWidget extends StatefulWidget {
   final List<OrdersModel> allOrders;

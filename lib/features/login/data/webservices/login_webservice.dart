@@ -1,6 +1,7 @@
+import 'dart:developer' show log;
 import 'package:dio/dio.dart';
-import 'package:zikola/core/networking/api_endpoints.dart';
 import '../../../../core/constants/strings.dart';
+import '../../../../core/networking/api_endpoints.dart';
 
 class LoginWebservice {
   late Dio dio;
@@ -16,11 +17,16 @@ class LoginWebservice {
     dio = Dio(baseOptions);
   }
 
-  Future<dynamic> login(String username, String password) async {
+  Future<dynamic> login(
+    String username,
+    String password,
+    String fcmToken,
+  ) async {
     Response response = await dio.post(
       ApiEndpoints.login,
-      data: {"username": username, "password": password},
+      data: {"username": username, "password": password, "fcm_token": fcmToken},
     );
+    log("======================${fcmToken}=============");
     logger.d(response.statusCode);
     return response.data;
   }

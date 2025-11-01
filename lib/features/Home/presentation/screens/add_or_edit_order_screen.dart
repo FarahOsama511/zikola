@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zikola/core/constants/strings.dart';
-import 'package:zikola/features/Home/data/models/item_model.dart';
-import 'package:zikola/features/Home/data/models/orders_model.dart';
+import '../../../../core/constants/strings.dart';
 import '../../../../core/routing/approutes.dart';
+import '../../data/models/item_model.dart';
+import '../../data/models/orders_model.dart';
 import '../widgets/details_my_order.dart';
 
 // ignore: must_be_immutable

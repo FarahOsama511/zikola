@@ -9,7 +9,6 @@ import '../../../../core/theming/text_style_manager.dart';
 
 class SettingsCard extends StatefulWidget {
   const SettingsCard({super.key});
-
   @override
   State<SettingsCard> createState() => _SettingsCardState();
 }
@@ -24,6 +23,7 @@ class _SettingsCardState extends State<SettingsCard> {
 
   @override
   Widget build(BuildContext context) {
+    logger.d(isDark);
     return Positioned(
       top: 160,
       right: 20,
@@ -49,12 +49,15 @@ class _SettingsCardState extends State<SettingsCard> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.sunny, size: 35),
+                  icon: Icon(isDark ? Icons.dark_mode : Icons.sunny, size: 35),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("الوضع الداكن", style: TextStyleManager.font15Bold),
+                    Text(
+                      isDark ? "الوضع الليلي" : "الوضع النهاري",
+                      style: TextStyleManager.font15Bold,
+                    ),
                     Text(
                       isDark ? "مفعل" : "غير مفعل",
                       style: TextStyleManager.font15Bold.copyWith(

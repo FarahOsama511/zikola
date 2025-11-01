@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zikola/features/barista_home/data/repositiries/get_all_orders_repo.dart';
+import '../data/repositiries/get_all_orders_repo.dart';
 import 'update_status_order_state.dart';
 
 class UpdateOrderCubit extends Cubit<UpdateOrderState> {

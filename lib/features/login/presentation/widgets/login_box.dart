@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
-import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
 
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
 import '../../bussines logic/login_cubit.dart';
+import 'build_widget_text_field.dart';
 
 class LoginBox extends StatefulWidget {
   const LoginBox({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/item_cubit.dart';
-import 'package:zikola/features/login/presentation/widgets/build_widget_text_field.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
+import '../../../login/presentation/widgets/build_widget_text_field.dart';
+import '../../business logic/cubit/cubit/item_cubit.dart';
 import '../../business logic/cubit/cubit/item_state.dart';
 import '../widgets/categories_widget.dart';
 import '../widgets/items_widget.dart' show ItemsWidget;

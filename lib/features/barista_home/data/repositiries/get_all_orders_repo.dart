@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:zikola/features/barista_home/data/webservices/get_all_orders_webservice.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../Home/data/models/orders_model.dart';
+import '../webservices/get_all_orders_webservice.dart';
 
 class GetAllOrdersRepo {
   final GetAllOrdersWebservice getAllOrdersWebservice;

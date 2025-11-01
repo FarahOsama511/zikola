@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
+
+import '../../../../core/theming/color_manager.dart';
 
 class CustomDropdownExample extends StatefulWidget {
   const CustomDropdownExample({super.key});

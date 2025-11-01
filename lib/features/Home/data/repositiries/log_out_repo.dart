@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:zikola/core/networking/api_error_handler.dart';
-import 'package:zikola/core/networking/api_result.dart';
-import 'package:zikola/features/Home/data/webservices/log_out_webservices.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/helpers/sharedpref_helper.dart';
+import '../../../../core/networking/api_error_handler.dart';
+import '../../../../core/networking/api_result.dart';
+import '../webservices/log_out_webservices.dart';
 
 class LogOutRepo {
   final LogOutWebservices logOutWebservices;

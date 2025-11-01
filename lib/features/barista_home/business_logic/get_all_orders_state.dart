@@ -1,4 +1,4 @@
-import 'package:zikola/core/networking/api_error_model.dart';
+import '../../../core/networking/api_error_model.dart';
 import '../../Home/data/models/orders_model.dart';
 
 abstract class GetAllOrdersState {}

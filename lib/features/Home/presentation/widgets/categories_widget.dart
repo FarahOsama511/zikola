@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
+
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
 
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({super.key});

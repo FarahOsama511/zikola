@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zikola/core/constants/strings.dart';
-import 'package:zikola/core/routing/approutes.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/features/Home/data/models/item_model.dart';
+
+import '../../../../core/constants/strings.dart';
+import '../../../../core/routing/approutes.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../data/models/item_model.dart';
 
 class ItemsWidget extends StatefulWidget {
   List<ItemModel> item = [];

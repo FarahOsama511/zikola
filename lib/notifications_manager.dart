@@ -1,11 +1,7 @@
 // import 'dart:convert';
-
-// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:googleapis_auth/auth_io.dart';
-// import 'package:http/http.dart' as http;
 
 // class NotificationsManager {
 //   // region Singleton

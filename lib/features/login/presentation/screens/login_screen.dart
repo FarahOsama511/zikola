@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
-
+import '../../../../core/theming/text_style_manager.dart';
 import '../widgets/build_bloc_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -66,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 20.h),
 
-                  // صورة إضافية
                   SizedBox(
                     height: 130.h,
                     width: double.infinity,
@@ -80,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   SizedBox(height: 20.h),
-
                   buildBlocWidget(),
                 ],
               ),

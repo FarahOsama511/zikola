@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
 
 class buildWidgetTextFormField extends StatelessWidget {
   final String hintText;
@@ -42,10 +42,7 @@ class buildWidgetTextFormField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyleManager.font15RegularGrey,
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(
-          vertical: 12.h,
-          horizontal: 12.w,
-        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13.r),
           borderSide: BorderSide(
@@ -62,7 +59,7 @@ class buildWidgetTextFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(13.r),
           borderSide: BorderSide(color: Colors.red),
         ),
-    
+
         filled: true,
         fillColor: Color.fromARGB(255, 238, 235, 235),
       ),

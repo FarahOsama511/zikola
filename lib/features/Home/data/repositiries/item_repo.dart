@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:zikola/core/networking/api_error_handler.dart';
-import 'package:zikola/core/networking/api_result.dart';
-import 'package:zikola/features/Home/data/models/item_model.dart';
-import 'package:zikola/features/Home/data/webservices/item_webservice.dart';
 import '../../../../core/constants/strings.dart';
+import '../../../../core/networking/api_error_handler.dart';
+import '../../../../core/networking/api_result.dart';
+import '../models/item_model.dart';
+import '../webservices/item_webservice.dart';
 
 class ItemRepo {
   final ItemWebservice itemWebservice;

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zikola/core/theming/color_manager.dart';
-import 'package:zikola/core/theming/text_style_manager.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_cubit.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/log_out_state.dart';
-import 'package:zikola/features/Home/business%20logic/cubit/cubit/my_orders_cubit.dart';
-import 'package:zikola/features/Home/data/models/orders_model.dart';
 import '../../../../core/routing/approutes.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
+import '../../business logic/cubit/cubit/log_out_cubit.dart';
+import '../../business logic/cubit/cubit/log_out_state.dart';
+import '../../business logic/cubit/cubit/my_orders_cubit.dart';
 import '../../business logic/cubit/my_orders_state.dart';
+import '../../data/models/orders_model.dart';
 import '../widgets/settings_card.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -71,7 +71,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Duration(days: 7),
                       );
 
-                      // نختار الأوردرات اللي حصلت خلال آخر أسبوع
                       List<OrdersModel> recentOrders = allOrders
                           .where(
                             (order) => order.createdAt!.isAfter(oneWeekAgo),
